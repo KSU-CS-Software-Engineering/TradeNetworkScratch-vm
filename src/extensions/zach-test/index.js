@@ -1,12 +1,7 @@
 const formatMessage = require('format-message');
-const nets = require('nets');
 
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
-const Cast = require('../../util/cast');
-const MathUtil = require('../../util/math-util');
-const Clone = require('../../util/clone');
-const log = require('../../util/log');
 
 /**
  * Icon svg to be displayed in the blocks category menu, encoded as a data URI.
