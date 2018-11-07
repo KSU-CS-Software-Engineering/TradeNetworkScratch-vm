@@ -37,7 +37,6 @@ const NORMAL_ID = 'NORMAL';
  * @constructor
  */
 class ZachTestBlocks {
-
     constructor (runtime) {
         this.runtime = runtime;
         this.currentStatus = NORMAL_ID;
@@ -48,37 +47,57 @@ class ZachTestBlocks {
             [GOOD_ID]: {
                 name: formatMessage({
                     id: 'test.good',
-                    default: 'good',
+                    default: 'Good',
                     description: 'Name for good.'
                 })
             },
             [BAD_ID]: {
                 name: formatMessage({
                     id: 'test.bad',
-                    default: 'bad',
+                    default: 'Bad',
                     description: 'Name for bad.'
                 })
             },
             [NORMAL_ID]: {
                 name: formatMessage({
                     id: 'test.normal',
-                    default: 'normal',
+                    default: 'Normal',
                     description: 'Name for normal.'
                 })
             }
         };
     }
 
-    get DEFAULT_INFO (){
-        return 'normal';
+    get DEFAULT_STATE_INFO (){
+        return NORMAL_ID;
     }
 
-    /**
-     * The key to load & store a target's text2speech state.
-     * @return {string} The key.
-     */
+    static get DEFAULT_TEST_STATE () {
+        return {
+            currentStatus: NORMAL_ID
+        };
+    }
+
     static get STATE_KEY () {
-        return 'Scratch.text2speech';
+        return 'Zach.Test';
+    }
+
+    _getState (target) {
+        let state = target.getCustomState(ZachTestBlocks.STATE_KEY);
+        if (!state) {
+            state = Clone.simple(ZachTestBlocks.DEFAULT_TEST_STATE);
+            target.setCustomState(ZachTestBlocks.STATE_KEY, state);
+        }
+        return state;
+    }
+
+    _onTargetCreated (newTarget, sourceTarget) {
+        if (sourceTarget) {
+            const state = sourceTarget.getCustomState(ZachTestBlocks.STATE_KEY);
+            if (state) {
+                newTarget.setCustomState(ZachTestBlocks.STATE_KEY, Clone.simple(state));
+            }
+        }
     }
 
     /**
@@ -103,7 +122,7 @@ class ZachTestBlocks {
                         STATUS: {
                             type: ArgumentType.STRING,
                             menu: 'menu',
-                            defaultValue: this.DEFAULT_INFO
+                            defaultValue: this.DEFAULT_STATE_INFO
                         }
                     }
                 },
@@ -127,6 +146,7 @@ class ZachTestBlocks {
     getStatus (){
         return this.currentStatus;
     }
+
     /**
      * Get the menu of voices for the "set voice" block.
      * @return {array} the text and value for each menu item.
