@@ -391,7 +391,7 @@ class Scratch3PenBlocks {
                     arguments: {
                         SIZE: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 'dictionary'
                         }
                     }
                 },
