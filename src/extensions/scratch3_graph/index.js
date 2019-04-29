@@ -90,6 +90,55 @@ class Scratch3Graph {
                         default: 'Cear the graph',
                         description: 'Clears the graph'
                     })
+                },
+                {
+                    opcode: 'getCount',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'graph.getCount',
+                        default: 'Graph Count',
+                        description: 'Gets the number of items stored in the graph'
+                    })
+                },
+                {
+                    opcode: 'getAll',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'graph.getAll',
+                        default: 'Graph Nodes',
+                        description: 'Gets a list of all nodes stored in the graph'
+                    })
+                },
+                {
+                    opcode: 'connectedTo',
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: 'graph.connectedTo',
+                        default: 'Is there an edge between [NODE1] and [NODE2]',
+                        description: 'Checks to see if two nodes are connected'
+                    }),
+                    arguments: {
+                        NODE1: {
+                            type: ArgumentType.STRING
+                        },
+                        NODE2: {
+                            type: ArgumentType.STRING
+                        }
+                    }
+                },
+                {
+                    opcode: 'allFrom',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'graph.allFrom',
+                        default: 'Get the number of edges originating from [NODE]',
+                        description: 'Retrieves the number of edges originating from a node'
+                    }),
+                    arguments: {
+                        NODE: {
+                            type: ArgumentType.STRING
+                        }
+                    }
                 }
             ]
         };
@@ -127,6 +176,37 @@ class Scratch3Graph {
 
     clearGraph () {
         this._graph = [];
+    }
+
+    getCount () {
+        return Object.keys(this._graph).length;
+    }
+
+    getAll () {
+        return Object.keys(this._graph).join(', ');
+    }
+
+    connectedTo (args) {
+        if (this._graph[args.NODE1]) {
+            let node = this._graph[args.NODE1];
+            while (node && node.data !== args.NODE2) {
+                node = node.next;
+            }
+            if (node) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    allFrom (args) {
+        let count = 0;
+        let node = this._graph[args.NODE];
+        while (node) {
+            count++;
+            node = node.next;
+        }
+        return count;
     }
 
 }
