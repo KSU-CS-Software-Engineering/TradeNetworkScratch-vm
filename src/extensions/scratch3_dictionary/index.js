@@ -33,7 +33,7 @@ class Scratch3Dictionary {
                     opcode: 'insert',
                     blockType: BlockType.COMMAND,
                     text: formatMessage({
-                        id: 'dictionary.clear',
+                        id: 'dictionary.insert',
                         default: 'Add [KEY], [VALUE] to the dictionary',
                         description: 'Inserts a key value pair into the dictionary'
                     }),

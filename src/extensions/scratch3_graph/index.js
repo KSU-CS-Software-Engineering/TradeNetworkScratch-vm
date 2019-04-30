@@ -139,6 +139,20 @@ class Scratch3Graph {
                             type: ArgumentType.STRING
                         }
                     }
+                },
+                {
+                    opcode: 'getNodeByIndex',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'graph.getNodeByIndex',
+                        default: 'Get node by index [INDEX]',
+                        description: 'Retrieves a node using an index value'
+                    }),
+                    arguments: {
+                        INDEX: {
+                            type: ArgumentType.NUMBER
+                        }
+                    }
                 }
             ]
         };
@@ -207,6 +221,11 @@ class Scratch3Graph {
             node = node.next;
         }
         return count;
+    }
+
+    getNodeByIndex (args) {
+        const graphArray = Object.keys(this._graph);
+        return graphArray[args.INDEX];
     }
 
 }
