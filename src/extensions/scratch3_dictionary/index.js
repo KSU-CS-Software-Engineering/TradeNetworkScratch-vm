@@ -50,7 +50,7 @@ class Scratch3Dictionary {
                     opcode: 'lookUp',
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
-                        id: 'dictionary.reporter',
+                        id: 'dictionary.lookUp',
                         default: 'Look up value with key [KEY]',
                         description: 'reports a dictionary entry'
                     }),
@@ -68,7 +68,16 @@ class Scratch3Dictionary {
                         default: 'Clear the dictionary',
                         description: 'clears the dictionary'
                     })
-                }
+                },
+				{
+					opcode: 'getDictCount',
+					blockType: BlockType.REPORTER,
+					text: formatMessage({
+						id: 'dictionary.getCount',
+						default: 'Dictionary count',
+						description: 'Gets the number of key value paiirs in the dictionary'
+					})
+				}
             ]
         };
     }
@@ -85,8 +94,11 @@ class Scratch3Dictionary {
 
     clearDictionary () {
         this._dictionary = {};
-
-    }
+	}
+	
+	getDictCount () {
+		return Object.keys(this._dictionary).length;
+	}
 }
 
 module.exports = Scratch3Dictionary;
